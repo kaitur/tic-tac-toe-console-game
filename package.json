@@ -1,0 +1,24 @@
+{
+  "name": "tic-tac-toe-console-game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaitur/tic-tac-toe-console-game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kaitur/tic-tac-toe-console-game/issues"
+  },
+  "homepage": "https://github.com/kaitur/tic-tac-toe-console-game#readme",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "node": "^16.5.0",
+    "prompt": "^1.1.0"
+  }
+}
