@@ -1,6 +1,6 @@
 //import {makeBoard, printBoard, board} from './playing-field-display.js';
-//import * as emp from './playing-field-display.js';
-import board from '../playing-field-display.js';
+import { printBoard } from './playing-field-display.js';
+// import board from './playing-field-display.js';
 
 let boardd = {
     1: ' ',
@@ -15,6 +15,6 @@ let boardd = {
 };
 describe('Name of the group', () => {
     it('should ', () => {
-        expect(board).toBe(boardd);
+        expect(printBoard).toBe("23");
     });
 });

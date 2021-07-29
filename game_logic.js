@@ -1,14 +1,11 @@
-import {makeBoard, printBoard, board} from './playing-field-display.js';
-
-import pkg_0 from 'prompt';
-const {start, get} = pkg_0;
+import { makeBoard, printBoard, board } from './playing-field-display.js';
 
 import pkg_1 from 'colors';
 const { green } = pkg_1;
 
 
 //*** function to check the value ***\\
-function isInt(value) {
+export function isInt(value) {
     let x;
     if (isNaN(value)) {
         return false;
@@ -36,7 +33,7 @@ function checkwin(player) {
             if (mark === 3) {
                 count++;
                 if (count === 0) {
-                    console.log(green.bold('Game Tie'));
+                    console.log(colors.green.bold('DRAW'));
                     return;
                 }
                 return true;
@@ -46,27 +43,18 @@ function checkwin(player) {
     return false;
 }
 
-function playerTurn(player) {
+export function playerTurn(player, res) {
     console.log('Your turn player: ', player);
-    start();
-    get(['position'], function (err, res) {
-        if (validate(res.position) === true) {
-            makeBoard(res.position, player);
-            printBoard();
-            if (checkwin(player) === true) {
-                console.log(green.bold(`Won: ${player}!!`));
-                return;
-            }
-            if (player === 'X') {
-                playerTurn('O');
-            } else {
-                playerTurn('X');
-            }
-        } else {
-            console.log(green.bold('incorrect input please try again..'));
-            playerTurn(player);
+    if (validate(res.position) === true) {
+        makeBoard(res.position, player);
+        printBoard();
+        if (checkwin(player) === true) {
+            console.log(green.bold(`Won: ${player}!`));
+            return;
         }
-    });
+    }
+    else {
+        console.log(green.bold('incorrect input please try again..'));
+        playerTurn(player);
+    }
 }
-
-playerTurn('X');
