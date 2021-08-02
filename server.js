@@ -1,43 +1,64 @@
 import { createServer } from 'net';
-import { makeBoard, printBoard, board } from './playing-field-display.js';
 import { isInt, playerTurn } from './game_logic.js';
+import { write } from 'fs';
 
-const players = [{simbol: 'X', socket: "ww"},
-{simbol: 'O', socket: "aw"}
-];
+import pkg from 'colors';
+const { green } = pkg;
 
-let user1 = {
-    simbol: 'X',
-    sockt: undefined
-};
-let user2 = {
-    simbol: 'O',
-    sockt: undefined
-};
-let players = [user1, user2];
+let map = new Map();
+let players = [];
+let simbol = '';
+let turn = true;
 
 const server = createServer(function (socket) {
 
     const port = socket.remotePort;
     console.log('Player IP. Port: ', socket.remoteAddress);
     console.log('Client connected. Port: ', port);
+    players.push(socket);
+    Connect();
 
     socket.on('data', message => {
-        //let res = { 'position': message.toString() }
-        //playerTurn('X', res);
+        if (turn) {
+            let position = message.toString().replace(/\s/g, '');
+            playerTurn('X', position);
+            turn = !turn;
+        }
+        else {
+            let position = message.toString().replace(/\s/g, '');
+            playerTurn('O', position);
+            turn = !turn;
+        }
     });
-
     socket.on('close', () => {
         let index = players.indexOf(socket);
         players.splice(index, 1);
-        console.log('Closed', port);
+        console.log('Closed', port, index);
     });
 
-    players.user1.sockt !== undefined ?  players.user1.sockt.push(socket) :  players.user2.sockt.push(socket);
+    function Connect() {
+        if (players.length <= 2) {
+            let index = players.indexOf(socket);
+            if (players.length === 1) {
+                simbol = 'X';
+                map.set(simbol, index);
+                socket.write(green.bold('Game started, select a position by numbers : \n\n' +
+                    '\t\t\t\t\t\t1 | 2 | 3 \n' +
+                    '\t\t\t\t\t\t4 | 5 | 6 \n' +
+                    '\t\t\t\t\t\t7 | 8 | 9 \n'));
+            }
+            else {
+                simbol = 'O';
+                map.set(simbol, index);
+                socket.write(green.bold('Game started, select a position by numbers : \n\n' +
+                    '\t\t\t\t\t\t1 | 2 | 3 \n' +
+                    '\t\t\t\t\t\t4 | 5 | 6 \n' +
+                    '\t\t\t\t\t\t7 | 8 | 9 \n'));
+            }
+        }
+    }
 
-    //players.push(socket);
-
-    //socket.pipe(process.stdout);
+    socket.pipe(process.stdout);
 
 });
 

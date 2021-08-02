@@ -33,7 +33,7 @@ function checkwin(player) {
             if (mark === 3) {
                 count++;
                 if (count === 0) {
-                    console.log(colors.green.bold('DRAW'));
+                    console.log(coformslors.green.bold('DRAW'));
                     return;
                 }
                 return true;
@@ -43,10 +43,11 @@ function checkwin(player) {
     return false;
 }
 
-export function playerTurn(player, res) {
+export function playerTurn(player, position) {
+    console.log(position);
     console.log('Your turn player: ', player);
-    if (validate(res.position) === true) {
-        makeBoard(res.position, player);
+    if (validate(position) === true) {
+        makeBoard(position, player);
         printBoard();
         if (checkwin(player) === true) {
             console.log(green.bold(`Won: ${player}!`));
@@ -55,6 +56,6 @@ export function playerTurn(player, res) {
     }
     else {
         console.log(green.bold('incorrect input please try again..'));
-        playerTurn(player);
+        //playerTurn(player, res);
     }
 }
